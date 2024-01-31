@@ -1,0 +1,296 @@
+\documentclass[twoside]{article}
+\author{John Appleseed}
+\date{\vspace{-2em}}
+\newcommand{\TheTitle}{Real Analysis} %put title in this
+\newcommand{\TheYear}{2024}
+\newcommand{\TheSubtitle}{Problem Set \#1 Solution}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%% Packages %%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{amsmath, amsfonts, amsthm,mathtools,amssymb} %main packages
+\usepackage{titlesec} 
+\usepackage{titletoc}
+\usepackage[nottoc]{tocbibind}
+
+%%%geometry/spacing etc
+\usepackage[portrait, left = 0.5 in, right = 0.5 in, top = 0.8 in, bottom = 1 in]{geometry}
+\usepackage{setspace} %sets spacing
+\usepackage{graphicx} %to insert images
+
+\usepackage[bookmarks=true, colorlinks=true, linkcolor=blue, citecolor= red,hypertexnames=false,pdftex,]{hyperref}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Real Analysis Set #1 Solution},
+    pdfpagemode=FullScreen,
+    }
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\tcbset{skin=enhanced}
+\usepackage{xcolor}
+\usepackage{enumitem} %% costumize \item
+\usepackage{siunitx} %% SI unit
+\usepackage{subfigure}
+\usepackage{framed} 
+\usepackage{cancel}
+\usepackage{tikz}
+\usepackage{lipsum} %%  for dummy text
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%% Environment %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Section
+\titleformat{\section}
+    {\normalfont\Large\scshape}
+    {Problem \#\thetitle}
+    {0em}
+    {}
+
+\titlecontents
+    {section}                       % which level does it apply to, e.g. chapter, section, ...
+    [1in]                           % left margin
+    {}                              % code executed before the tocline
+    {Problem \#\thecontentslabel}  % format for numbered entries
+    {Problem \#\thecontentslabel}  % format for unnumbered entries
+    {\titlerule*[0.5pc]{$\cdot$}\contentspage\hspace*{1in}}                              % format for filler page
+    []       
+
+%% Theorem, Lemma, Corollary, Proposition
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
+%% Conclusion
+\newenvironment{conclusion}{{\medskip}
+\noindent
+\textbf{Conclusion.}}{{\medskip}}
+
+%% Claim
+\newenvironment{claim}{{\medskip}
+\noindent
+\textbf{Claim.}}{{\medskip}}
+
+%% Numberless environments
+\newtheorem*{theorem*}{Theorem}
+\newtheorem*{lemma*}{Lemma}
+\newtheorem*{corollary*}{Corollary}
+
+%% solution for custom numbering in theorems and lemmata:
+\newtheorem{innercustomgeneric}{\customgenericname}
+\providecommand{\customgenericname}{}
+\newcommand{\newcustomtheorem}[2]{%
+  \newenvironment{#1}[1]
+  {%
+   \renewcommand\customgenericname{#2}%
+   \renewcommand\theinnercustomgeneric{##1}%
+   \innercustomgeneric
+  }
+  {\endinnercustomgeneric}
+}
+\newcustomtheorem{customthm}{Theorem}
+\newcustomtheorem{customlemma}{Lemma}
+
+%%% subproof, subsubproof
+\newenvironment{subsubproof}[1][Proof]{%
+\begin{proof}[#1] \renewcommand{\qedsymbol}{$\clubsuit$}}%
+{\end{proof}}
+\newenvironment{subproof}[1][Proof]{%
+\begin{proof}[#1] \renewcommand{\qedsymbol}{$\blacksquare$}}%
+{\end{proof}}
+\makeatletter
+
+%%% Reference: https://tex.stackexchange.com/questions/85059/proof-environment-line-break-after-the-proof
+\newenvironment{myproof}[1][\proofname]{\par
+    \pushQED{\qed}%
+    \normalfont \topsep6\p@\@plus6\p@\relax
+    \trivlist
+    \item[\hskip\labelsep
+        \itshape
+        #1\@addpunct{.} ]\mbox{}\par\nobreak}
+    {\popQED\endtrivlist\@endpefalse}
+\makeatother
+
+%% soln environment with line skipped
+\newenvironment{soln}[1][Solution]{%
+\begin{myproof}[#1] }%
+{\end{myproof}}
+\makeatother
+
+%% solution environment without line skipped 
+\newenvironment{solution}[1][Solution]{
+  \begin{proof}[Solution][#1]}{\end{proof}}
+
+
+%%% fluffy.sty remark & extension environment
+\newenvironment{remark}[1][\textbf{Remark}]{\begin{tcolorbox}[enhanced, coltitle=black, frame code={\path[draw=black, line width=2pt]
+  ([yshift=-4.5pt]frame.north west) -- ([yshift=10pt]frame.south west);}, colback=white, adjusted title=#1, left=8pt, right=8pt, breakable=true]}{\end{tcolorbox}}
+
+\newenvironment{extension}[1][\textcolor{blue}{\textbf{Extension}}]{\begin{tcolorbox}[enhanced, coltitle=black, frame code={\path[draw=blue, line width=2pt]
+    ([yshift=-4.5pt]frame.north west) -- ([yshift=10pt]frame.south west);}, colback=white, adjusted title=#1, left=8pt, right=8pt, breakable=true]}{\end{tcolorbox}}
+    
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{example}[definition]{Example}
+
+%% Title scshape and size
+\titleformat{\title}  % which section command to format
+  {\fontsize{18}{12}\scshape} % format for whole line
+  {} % how to show number
+  {1em} % space between number and text
+  {} % formatting for just the text
+  [] % formatting for after the text
+
+%% Subtitle
+\titleformat{\subtitle}  % which section command to format
+  {\fontsize{16}{12}\scshape} % format for whole line
+  {} % how to show number
+  {1em} % space between number and text
+  {\underline} % formatting for just the text
+  [] % formatting for after the text
+
+%% Subsection 
+\titleformat{\subsection}  % which section command to format
+  {\fontsize{12}{14}\scshape} % format for whole line
+  {\thesubsection} % how to show number
+  {1em} % space between number and text
+  {} % formatting for just the text
+  [] % formatting for after the text
+
+%% Subsubsection 
+\titleformat{\subsubsection}  % which section command to format
+  {\fontsize{12}{10}\scshape} % format for whole line
+  {\thesubsection} % how to show number
+  {1em} % space between number and text
+  {} % formatting for just the text
+  [] % formatting for after the text
+
+%% enumecase environment
+  \newlist{enumcase}{enumerate}{1}
+  \setlist[enumcase,1]{%
+      % align=right,
+      % itemsep=\topsep,
+      % listparindent=\parindent,
+      label={\bfseries Case~\arabic*:}}
+      
+%% Code
+      \usepackage{listings}
+      \usepackage{mathrsfs}
+      \usepackage{textcomp}
+      \definecolor{dkgreen}{rgb}{0,0.6,0}
+      \definecolor{gray}{rgb}{0.5,0.5,0.5}
+      \definecolor{mauve}{rgb}{0.58,0,0.82}
+      \lstset{frame=tb,
+        language=Python,
+          numbers=left,
+           numberstyle=\tiny\color{gray},  
+        aboveskip=3mm,
+        belowskip=3mm,
+        showstringspaces=false,
+        columns=flexible,
+        basicstyle={\small\ttfamily},
+        numbers=none,
+        numberstyle=\tiny\color{gray},
+        keywordstyle=\color{blue},
+        commentstyle=\color{dkgreen},
+        stringstyle=\color{mauve},
+        breaklines=true,
+        breakatwhitespace=true,
+        tabsize=3
+      }
+      \lstset{frame=tb,
+        language=C++,
+          numbers=left,
+           numberstyle=\tiny\color{gray},  
+        aboveskip=3mm,
+        belowskip=3mm,
+        showstringspaces=false,
+        columns=flexible,
+        basicstyle={\small\ttfamily},
+        numbers=none,
+        numberstyle=\tiny\color{gray},
+        keywordstyle=\color{blue},
+        commentstyle=\color{dkgreen},
+        stringstyle=\color{mauve},
+        breaklines=true,
+        breakatwhitespace=true,
+        tabsize=3
+      }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%% Operators %%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\ii}{\item}
+\renewcommand{\gcd}{\operatorname{gcd}}
+\newcommand{\dg}{^\circ}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+\newcommand{\norm}[1]{\left\lvert\lvert#1\right\rvert\rvert}
+\renewcommand{\min}{\mathrm{min}}
+\DeclareMathOperator{\lcm}{lcm}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{%
+            \node[shape=circle,draw,inner sep=1.8pt] (char) {#1};}}
+%%% feel free to add other custom commands here and shortcuts.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%% Header %%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{fancyhdr}
+\fancyhf{}
+\fancyhead[LE]{\TheTitle\hfill \TheYear}
+\renewcommand{\sectionmark}[1]{ \markright{#1}{} }
+\fancyhead[RO]{\AuthorLast\hfill \TheSubtitle}
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\footrulewidth}{\iffootnote{0pt}{0.3pt}}
+\fancyfoot[C]{\thepage}
+
+\titleformat{\title}[display]
+{\centering\scshape\huge}
+{Part \thepart}
+{0.5em}
+{}
+
+\title {\scshape \TheTitle~\TheYear\\[1ex] \large \underline{\TheSubtitle}}
+\newcommand{\AuthorLast}{Appleseed} % Last Name
+
+\begin{document}
+\numberwithin{equation}{section}
+\maketitle
+\setstretch{0.1}
+\setstretch{1.25}
+
+\pagestyle{fancy}
+
+
+\section*{Introduction}
+Hi! I am John Appleseed. 
+
+\lipsum[3]
+
+Happy reading!
+
+
+\tableofcontents
+
+\newpage
+\input{Content} % edit Content to put in content
+
+%%%%%uncomment if using a bib
+%\setstretch{0.1}
+%\pagestyle{plain}
+%\renewcommand*{\bibfont}{\small}
+%\printbibliography[
+%heading=bibintoc,
+%title={Bibliography},
+%]
+
+\end{document}
