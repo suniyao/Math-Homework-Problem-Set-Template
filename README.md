@@ -86,4 +86,5 @@ The template includes some improved environments.
 ```
 
 # Example Compiled Result
-![image](https://github.com/PLASTA0728/Math-Homework-Problem-Set-Template/assets/121154397/a2963b8c-cbf6-4261-9658-84beb7345bed)
+![image](https://github.com/PLASTA0728/Math-Homework-Problem-Set-Template/blob/main/example-page-0001.jpg)
+![image](https://github.com/PLASTA0728/Math-Homework-Problem-Set-Template/blob/main/example-page-0002.jpg)
