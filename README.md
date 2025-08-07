@@ -1,90 +1,55 @@
-# Description of Template
-The template is served for private math homework writing, and I upgraded some existed environments so that it is specialized and suits my own writing habit better.
+# Better LaTeX Problem Set Template
 
-I don't really like vaious colorful fancy `tcolorbox`es, so propositions, theorems, lemmas and corollaries are just plain text without highlighted using various colors, though I did use some not-that-fancy colorboxes for `extension` and `remark` environments.
+A specialized LaTeX template designed for mathematical problem sets and homework assignments, featuring enhanced environments optimized for academic mathematical writing, prioritizing readability and structure while maintaining academic formatting standards.
 
-# Strongpoints
-The template includes some improved environments.
-- Solution environments (differed by whether the line is skipped after `Solution.`, before the content.)
-  - `soln` serves for problems that have different parts, so it would be better and looks like
-   ```
-  Solution.
-  (a) ...
-  (b) ...
-   ```
-  - `solution` serves for problems that only have one part, which would be like
-    ```
-    Solution. I claimed that ...
-    ```
-  These two environments are done with the following code:
+## Key Features
+
+### Enhanced Solution Environments
+
+The template includes two distinct solution environments to accommodate different problem structures:
+
+- **`soln`** - For multi-part problems with line break after "Solution."
+  ```latex
+  \begin{soln}
+  (a) First part of the solution...
+  (b) Second part of the solution...
+  \end{soln}
   ```
-  %%% Reference: https://tex.stackexchange.com/questions/85059/proof-environment-line-break-after-the-proof
-  \newenvironment{myproof}[1][\proofname]{\par
-    \pushQED{\qed}%
-    \normalfont \topsep6\p@\@plus6\p@\relax
-    \trivlist
-    \item[\hskip\labelsep
-        \itshape
-        #1\@addpunct{.} ]\mbox{}\par\nobreak}
-    {\popQED\endtrivlist\@endpefalse}
-  \makeatother
 
-  \newenvironment{soln}[1][Solution]{%
-  \begin{myproof}[#1] }%
-  {\end{myproof}}
-  \makeatother
-
-
-  \newenvironment{solution}[1][Solution]{
-  \begin{proof}[Solution][#1]}{\end{proof}}
+- **`solution`** - For single-part problems with inline formatting
+  ```latex
+  \begin{solution}
+  I claim that the statement holds because...
+  \end{solution}
   ```
-- `subproof`, `subsubproof` for proof inside solution and lemmas, differed by different qed symbols, including `\clubsuit` and `\blacksquare`, done by the following code:
-```
-\newenvironment{subsubproof}[1][Proof]{%
-\begin{proof}[#1] \renewcommand{\qedsymbol}{$\clubsuit$}}%
-{\end{proof}}
-\newenvironment{subproof}[1][Proof]{%
-\begin{proof}[#1] \renewcommand{\qedsymbol}{$\blacksquare$}}%
-{\end{proof}}
-\makeatletter
-```
-- Directly using `\section{}` to show Problem #1, 2, 3, ... (can be directly shown in the table of content, as an advantage comparing to `\section*{Problem \#1}`)
-```
-\titleformat{\section}
-    {\normalfont\Large\scshape}
-    {Problem \#\thetitle}
-    {0em}
-    {}
 
-\titlecontents
-    {section}                       % which level does it apply to, e.g. chapter, section, ...
-    [1in]                           % left margin
-    {}                              % code executed before the tocline
-    {Problem \#\thecontentslabel}  % format for numbered entries
-    {Problem \#\thecontentslabel}  % format for unnumbered entries
-    {\titlerule*[0.5pc]{$\cdot$}\contentspage\hspace*{1in}}                              % format for filler page
-    []
-```
+### Nested Proof Environments
 
-- Using `tcolorbox` for `remark` and `extension` environment (though if a pagebreak exists in the middle, it seems to work not quite well, feel free to report issues and improvement method!)
-```
-\newenvironment{remark}[1][\textbf{Remark}]{\begin{tcolorbox}[enhanced, coltitle=black, frame code={\path[draw=black, line width=2pt]
-  ([yshift=-4.5pt]frame.north west) -- ([yshift=10pt]frame.south west);}, colback=white, adjusted title=#1, left=8pt, right=8pt, breakable=true]}{\end{tcolorbox}}
+Support for hierarchical proof structures with distinct QED symbols:
 
-\newenvironment{extension}[1][\textcolor{blue}{\textbf{Extension}}]{\begin{tcolorbox}[enhanced, coltitle=black, frame code={\path[draw=blue, line width=2pt]
-    ([yshift=-4.5pt]frame.north west) -- ([yshift=10pt]frame.south west);}, colback=white, adjusted title=#1, left=8pt, right=8pt, breakable=true]}{\end{tcolorbox}}
-```
-- Add `claim` and `conclusion` environments
-```
-\newenvironment{conclusion}{{\medskip}
-\noindent
-\textbf{Conclusion.}}{{\medskip}}
+- **`subproof`** - Uses ■ (blacksquare) symbol for intermediate proofs
+- **`subsubproof`** - Uses ♣ (clubsuit) symbol for deeply nested proofs
 
-\newenvironment{claim}{{\medskip}
-\noindent
-\textbf{Claim.}}{{\medskip}}
-```
+These environments are particularly useful for complex proofs requiring lemmas or intermediate results.
 
-# Example Compiled Result
+### Automatic Problem Numbering
+
+Seamless integration with LaTeX sectioning for problem organization:
+- Problems are automatically numbered using `\section{}`
+- Full table of contents integration
+- Consistent formatting with "Problem #N" headers
+
+### Specialized Mathematical Environments
+
+Additional environments for mathematical exposition:
+
+- **`claim`** - For stating intermediate claims
+- **`conclusion`** - For summarizing results
+- **`remark`** - Highlighted observations with subtle visual styling
+- **`extension`** - Color-coded extensions and generalizations
+
+## Example Output
+
+The template produces clean, professional mathematical documents suitable for academic submission. See the example images for visual reference of the compiled output.
 ![image](https://github.com/PLASTA0728/Math-Homework-Problem-Set-Template/blob/main/example-page-0001.jpg)
 ![image](https://github.com/PLASTA0728/Math-Homework-Problem-Set-Template/blob/main/example-page-0002.jpg)
